@@ -115,17 +115,8 @@ public class AmmoDetailsSO : ScriptableObject
     [Space(10)]
     [Header("ICE SLOW")]
     #endregion
-    #region Tooltip
-    [Tooltip("Enable timed movement slow on hit targets")]
-    #endregion
     public bool isIceSlowEnabled = false;
-    #region Tooltip
-    [Tooltip("Movement speed multiplier during slow. 1 = no slow, 0.5 = 50% speed")]
-    #endregion
     [Range(0f, 1f)] public float iceSlowMultiplier = 0.5f;
-    #region Tooltip
-    [Tooltip("How long the slow effect lasts in seconds")]
-    #endregion
     public float iceSlowDuration = 2f;
 
         if (isIceSlowEnabled)
