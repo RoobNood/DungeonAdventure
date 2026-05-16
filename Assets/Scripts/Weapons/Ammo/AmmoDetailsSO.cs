@@ -111,24 +111,7 @@ public class AmmoDetailsSO : ScriptableObject
 
     #region Header FIRE DOT
     [Space(10)]
-    #region Header ICE SLOW
-    [Space(10)]
-    [Header("ICE SLOW")]
-    #endregion
-    public bool isIceSlowEnabled = false;
-    [Range(0f, 1f)] public float iceSlowMultiplier = 0.5f;
-    public float iceSlowDuration = 2f;
-
-        if (isIceSlowEnabled)
-        {
-            HelperUtilities.ValidateCheckPositiveValue(this, nameof(iceSlowDuration), iceSlowDuration, false);
-            if (iceSlowMultiplier <= 0f || iceSlowMultiplier > 1f)
-            {
-                Debug.LogError($"{name}: {nameof(iceSlowMultiplier)} must be > 0 and <= 1");
-            }
-        }
-
-    [Header("FIRE DOT (Â³Ã–ÃÃ¸Ã‰Ã‹ÂºÂ¦)")]
+    [Header("FIRE DOT (³ÖÐøÉËº¦)")]
     #endregion
     public bool isFireDotEnabled = false;
     public int fireDotDamagePerTick = 1;

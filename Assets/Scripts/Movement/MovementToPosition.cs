@@ -7,7 +7,6 @@ public class MovementToPosition : MonoBehaviour
 {
     private Rigidbody2D rigidBody2D;
     private MovementToPositionEvent movementToPositionEvent;
-    private float speedMultiplier = 1f;
 
     private void Awake()
     {
@@ -41,11 +40,6 @@ public class MovementToPosition : MonoBehaviour
     {
         Vector2 unitVector = Vector3.Normalize(movePosition - currentPosition);
 
-        rigidBody2D.MovePosition(rigidBody2D.position + (unitVector * moveSpeed * speedMultiplier * Time.fixedDeltaTime));
-    }
-
-    public void SetSpeedMultiplier(float multiplier)
-    {
-        speedMultiplier = multiplier;
+        rigidBody2D.MovePosition(rigidBody2D.position + (unitVector * moveSpeed * Time.fixedDeltaTime));
     }
 }
