@@ -188,6 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4776923baa2c32744b43b6c3a80bba56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthBar: {fileID: 0}
   isDamageable: 1
   enemy: {fileID: 0}
 --- !u!210 &4886237443457582242
@@ -347,7 +348,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 0.7554301
+  m_Mass: 1.5846992
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0

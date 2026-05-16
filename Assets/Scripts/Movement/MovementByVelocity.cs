@@ -10,37 +10,39 @@ public class MovementByVelocity : MonoBehaviour
     private Rigidbody2D rigidBody2D;
     private MovementByVelocityEvent movementByVelocityEvent;
 
+    //  只为减速加的变量（不影响你原来任何逻辑）
+    private float speedMultiplier = 1f;
+
     private void Awake()
     {
-        // Load components
         rigidBody2D = GetComponent<Rigidbody2D>();
         movementByVelocityEvent = GetComponent<MovementByVelocityEvent>();
     }
 
     private void OnEnable()
     {
-        // Subscribe to movement event
         movementByVelocityEvent.OnMovementByVelocity += MovementByVelocityEvent_OnMovementByVelocity;
     }
 
     private void OnDisable()
     {
-        // Unsubscribe from movement event
         movementByVelocityEvent.OnMovementByVelocity -= MovementByVelocityEvent_OnMovementByVelocity;
     }
 
-    // On movement event
     private void MovementByVelocityEvent_OnMovementByVelocity(MovementByVelocityEvent movementByVelocityEvent, MovementByVelocityArgs movementByVelocityArgs)
     {
         MoveRigidBody(movementByVelocityArgs.moveDirection, movementByVelocityArgs.moveSpeed);
     }
 
-    /// <summary>
-    /// Move the rigidbody component
-    /// </summary>
     private void MoveRigidBody(Vector2 moveDirection, float moveSpeed)
     {
-        // ensure the rb collision detection is set to continuous
-        rigidBody2D.velocity = moveDirection * moveSpeed;
+        //  只加了一个 speedMultiplier，其他完全不变
+        rigidBody2D.velocity = moveDirection * moveSpeed * speedMultiplier;
+    }
+
+    //  供冰子弹、蒸汽、冰面调用的减速方法
+    public void SetSpeedMultiplier(float multiplier)
+    {
+        speedMultiplier = multiplier;
     }
 }
