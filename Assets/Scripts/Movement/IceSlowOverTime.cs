@@ -1,22 +1,21 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(MovementByVelocity))]
 [DisallowMultipleComponent]
 public class IceSlowOverTime : MonoBehaviour
 {
     private MovementByVelocity movementByVelocity;
-    private MovementToPosition movementToPosition;
     private Coroutine slowCoroutine;
 
     private void Awake()
     {
         movementByVelocity = GetComponent<MovementByVelocity>();
-        movementToPosition = GetComponent<MovementToPosition>();
     }
 
     public void ApplySlow(float slowRatio, float duration)
     {
-        if ((movementByVelocity == null && movementToPosition == null) || slowRatio <= 0f || duration <= 0f)
+        if (movementByVelocity == null || slowRatio <= 0f || duration <= 0f)
             return;
 
         if (slowCoroutine != null)
@@ -27,25 +26,15 @@ public class IceSlowOverTime : MonoBehaviour
 
     private IEnumerator SlowRoutine(float slowRatio, float duration)
     {
-        SetSpeedMultiplier(slowRatio);
+        movementByVelocity.SetSpeedMultiplier(slowRatio);
 
         yield return new WaitForSeconds(duration);
 
-        SetSpeedMultiplier(1f);
-
-        slowCoroutine = null;
-    }
-
-    private void SetSpeedMultiplier(float multiplier)
-    {
         if (movementByVelocity != null)
         {
-            movementByVelocity.SetSpeedMultiplier(multiplier);
+            movementByVelocity.SetSpeedMultiplier(1f);
         }
 
-        if (movementToPosition != null)
-        {
-            movementToPosition.SetSpeedMultiplier(multiplier);
-        }
+        slowCoroutine = null;
     }
 }
