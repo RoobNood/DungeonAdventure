@@ -103,18 +103,6 @@ public class Ammo : MonoBehaviour, IFireable
                 burnDamageOverTime.ApplyBurn(ammoDetails.fireDotDamagePerTick, ammoDetails.fireDotTickInterval, ammoDetails.fireDotDuration);
             }
 
-            if (ammoDetails.isIceSlowEnabled)
-            {
-                IceSlowOverTime iceSlowOverTime = collision.GetComponent<IceSlowOverTime>();
-
-                if (iceSlowOverTime == null)
-                {
-                    iceSlowOverTime = collision.gameObject.AddComponent<IceSlowOverTime>();
-                }
-
-                iceSlowOverTime.ApplySlow(ammoDetails.iceSlowMultiplier, ammoDetails.iceSlowDuration);
-            }
-
             // Enemy hit
             if (health.enemy != null)
             {

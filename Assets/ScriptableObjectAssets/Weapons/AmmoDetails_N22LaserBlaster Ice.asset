@@ -10,34 +10,34 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b4954adab2da614ca52023de4ebf134, type: 3}
-  m_Name: AmmoDetails_Pistol 1
+  m_Name: AmmoDetails_N22LaserBlaster Ice
   m_EditorClassIdentifier: 
-  ammoName: Pistol Ammo
+  ammoName: N22 Laser Blaster Ammo
   isPlayerAmmo: 1
   ammoSprite: {fileID: 21300000, guid: 4df9cc7131cd27f4288bca5e76c82034, type: 3}
   ammoPrefabArray:
   - {fileID: 3704831762367981905, guid: 81751cb48351f4e4b8ce62c264add7f8, type: 3}
-  ammoMaterial: {fileID: 2100000, guid: c64696a09f1cb1a4d9766d1fe9778ca5, type: 2}
+  ammoMaterial: {fileID: 2100000, guid: f40d05d451e2ae24f91e9e3314c280da, type: 2}
   ammoChargeTime: 0
   ammoChargeMaterial: {fileID: 0}
-  ammoHitEffect: {fileID: 11400000, guid: 7fbecfc54055c8c43b2abd91e8fb0b68, type: 2}
-  ammoDamage: 6
-  ammoSpeedMin: 15
-  ammoSpeedMax: 15
-  ammoRange: 12
+  ammoHitEffect: {fileID: 11400000, guid: b181c6fb4241c6644aeab23ae2785408, type: 2}
+  ammoDamage: 15
+  ammoSpeedMin: 55
+  ammoSpeedMax: 55
+  ammoRange: 14
   ammoRotationSpeed: 1
-  ammoSpreadMin: 2
-  ammoSpreadMax: 4
+  ammoSpreadMin: 0.5
+  ammoSpreadMax: 1
   ammoSpawnAmountMin: 1
   ammoSpawnAmountMax: 1
   ammoSpawnIntervalMin: 0
   ammoSpawnIntervalMax: 0
-  isFireDotEnabled: 1
-  fireDotDamagePerTick: 9
+  isFireDotEnabled: 0
+  fireDotDamagePerTick: 1
   fireDotTickInterval: 0.5
-  fireDotDuration: 9
-  isAmmoTrail: 0
-  ammoTrailTime: 0
-  ammoTrailMaterial: {fileID: 0}
-  ammoTrailStartWidth: 0
-  ammoTrailEndWidth: 0
+  fireDotDuration: 2
+  isAmmoTrail: 1
+  ammoTrailTime: 0.1
+  ammoTrailMaterial: {fileID: 2100000, guid: f40d05d451e2ae24f91e9e3314c280da, type: 2}
+  ammoTrailStartWidth: 0.079
+  ammoTrailEndWidth: 0.2

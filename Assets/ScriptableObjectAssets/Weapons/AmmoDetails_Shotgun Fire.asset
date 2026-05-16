@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b4954adab2da614ca52023de4ebf134, type: 3}
-  m_Name: AmmoDetails_Fire44
+  m_Name: AmmoDetails_Shotgun Fire
   m_EditorClassIdentifier: 
-  ammoName: Fire Bullet
+  ammoName: Shotgun Ammo
   isPlayerAmmo: 1
   ammoSprite: {fileID: 21300000, guid: c3be09077243891458bdbf46a57d2e8a, type: 3}
   ammoPrefabArray:
@@ -32,10 +32,10 @@ MonoBehaviour:
   ammoSpawnAmountMax: 8
   ammoSpawnIntervalMin: 0
   ammoSpawnIntervalMax: 0.01
-  isFireDotEnabled: 1
-  fireDotDamagePerTick: 9
+  isFireDotEnabled: 0
+  fireDotDamagePerTick: 1
   fireDotTickInterval: 0.5
-  fireDotDuration: 5
+  fireDotDuration: 2
   isAmmoTrail: 0
   ammoTrailTime: 0
   ammoTrailMaterial: {fileID: 0}
