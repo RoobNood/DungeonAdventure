@@ -80,6 +80,22 @@ public class Ammo : MonoBehaviour, IFireable
 
     private void DealDamage(Collider2D collision)
     {
+        TorchElementState torchElementState = collision.GetComponent<TorchElementState>();
+
+        if (torchElementState != null)
+        {
+            switch (ammoDetails.elementType)
+            {
+                case AmmoDetailsSO.ElementType.Fire:
+                    torchElementState.Ignite();
+                    break;
+
+                case AmmoDetailsSO.ElementType.Water:
+                    torchElementState.Extinguish();
+                    break;
+            }
+        }
+
         Health health = collision.GetComponent<Health>();
 
         bool enemyHit = false;
