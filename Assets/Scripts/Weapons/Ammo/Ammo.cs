@@ -91,16 +91,45 @@ public class Ammo : MonoBehaviour, IFireable
 
             health.TakeDamage(ammoDetails.ammoDamage);
 
-            if (ammoDetails.isFireDotEnabled)
+            switch (ammoDetails.elementType)
             {
-                BurnDamageOverTime burnDamageOverTime = collision.GetComponent<BurnDamageOverTime>();
-
-                if (burnDamageOverTime == null)
+                case AmmoDetailsSO.ElementType.Fire:
                 {
-                    burnDamageOverTime = collision.gameObject.AddComponent<BurnDamageOverTime>();
+                    BurnDamageOverTime burnDamageOverTime = collision.GetComponent<BurnDamageOverTime>();
+
+                    if (burnDamageOverTime == null)
+                    {
+                        burnDamageOverTime = collision.gameObject.AddComponent<BurnDamageOverTime>();
+                    }
+
+                    burnDamageOverTime.ApplyBurn(ammoDetails.fireDotDamagePerTick, ammoDetails.fireDotTickInterval, ammoDetails.fireDotDuration);
+                    break;
                 }
 
-                burnDamageOverTime.ApplyBurn(ammoDetails.fireDotDamagePerTick, ammoDetails.fireDotTickInterval, ammoDetails.fireDotDuration);
+                case AmmoDetailsSO.ElementType.Ice:
+                {
+                    IceSlowOverTime iceSlowOverTime = collision.GetComponent<IceSlowOverTime>();
+
+                    if (iceSlowOverTime == null)
+                    {
+                        iceSlowOverTime = collision.gameObject.AddComponent<IceSlowOverTime>();
+                    }
+
+                    iceSlowOverTime.ApplySlow(ammoDetails.iceSlowMultiplier, ammoDetails.iceSlowDuration);
+                    break;
+                }
+
+                case AmmoDetailsSO.ElementType.Water:
+                {
+                    BurnDamageOverTime burnDamageOverTime = collision.GetComponent<BurnDamageOverTime>();
+
+                    if (burnDamageOverTime != null)
+                    {
+                        burnDamageOverTime.ClearBurn();
+                    }
+
+                    break;
+                }
             }
 
             // Enemy hit
