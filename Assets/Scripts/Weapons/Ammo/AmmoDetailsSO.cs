@@ -109,6 +109,15 @@ public class AmmoDetailsSO : ScriptableObject
     public float ammoSpawnIntervalMax = 0f;
 
 
+    #region Header FIRE DOT
+    [Space(10)]
+    [Header("FIRE DOT (持续伤害)")]
+    #endregion
+    public bool isFireDotEnabled = false;
+    public int fireDotDamagePerTick = 1;
+    public float fireDotTickInterval = 0.5f;
+    public float fireDotDuration = 2f;
+
     #region Header AMMO TRAIL DETAILS
     [Space(10)]
     [Header("AMMO TRAIL DETAILS")]
@@ -151,6 +160,13 @@ public class AmmoDetailsSO : ScriptableObject
         HelperUtilities.ValidateCheckPositiveRange(this, nameof(ammoSpreadMin), ammoSpreadMin, nameof(ammoSpreadMax), ammoSpreadMax, true);
         HelperUtilities.ValidateCheckPositiveRange(this, nameof(ammoSpawnAmountMin), ammoSpawnAmountMin, nameof(ammoSpawnAmountMax), ammoSpawnAmountMax, false);
         HelperUtilities.ValidateCheckPositiveRange(this, nameof(ammoSpawnIntervalMin), ammoSpawnIntervalMin, nameof(ammoSpawnIntervalMax), ammoSpawnIntervalMax, true);
+        if (isFireDotEnabled)
+        {
+            HelperUtilities.ValidateCheckPositiveValue(this, nameof(fireDotDamagePerTick), fireDotDamagePerTick, false);
+            HelperUtilities.ValidateCheckPositiveValue(this, nameof(fireDotTickInterval), fireDotTickInterval, false);
+            HelperUtilities.ValidateCheckPositiveValue(this, nameof(fireDotDuration), fireDotDuration, false);
+        }
+
         if (isAmmoTrail)
         {
             HelperUtilities.ValidateCheckPositiveValue(this, nameof(ammoTrailTime), ammoTrailTime, false);
