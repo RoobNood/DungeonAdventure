@@ -111,7 +111,7 @@ public class AmmoDetailsSO : ScriptableObject
 
     #region Header FIRE DOT
     [Space(10)]
-    [Header("FIRE DOT (æŒç»­ä¼¤å®³)")]
+    [Header("FIRE DOT (³ÖĞøÉËº¦)")]
     #endregion
     public bool isFireDotEnabled = false;
     public int fireDotDamagePerTick = 1;

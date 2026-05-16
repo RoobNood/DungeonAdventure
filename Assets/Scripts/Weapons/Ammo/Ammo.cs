@@ -91,18 +91,6 @@ public class Ammo : MonoBehaviour, IFireable
 
             health.TakeDamage(ammoDetails.ammoDamage);
 
-            if (ammoDetails.isFireDotEnabled)
-            {
-                BurnDamageOverTime burnDamageOverTime = collision.GetComponent<BurnDamageOverTime>();
-
-                if (burnDamageOverTime == null)
-                {
-                    burnDamageOverTime = collision.gameObject.AddComponent<BurnDamageOverTime>();
-                }
-
-                burnDamageOverTime.ApplyBurn(ammoDetails.fireDotDamagePerTick, ammoDetails.fireDotTickInterval, ammoDetails.fireDotDuration);
-            }
-
             // Enemy hit
             if (health.enemy != null)
             {
