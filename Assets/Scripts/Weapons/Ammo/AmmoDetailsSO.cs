@@ -111,12 +111,29 @@ public class AmmoDetailsSO : ScriptableObject
 
     #region Header FIRE DOT
     [Space(10)]
-    [Header("FIRE DOT (³ÖÐøÉËº¦)")]
+    [Header("FIRE DOT (Ëº)")]
     #endregion
     public bool isFireDotEnabled = false;
     public int fireDotDamagePerTick = 1;
     public float fireDotTickInterval = 0.5f;
     public float fireDotDuration = 2f;
+
+    #region Header ICE SLOW
+    [Space(10)]
+    [Header("ICE SLOW")]
+    #endregion
+    #region Tooltip
+    [Tooltip("Enable timed movement slow on hit targets")]
+    #endregion
+    public bool isIceSlowEnabled = false;
+    #region Tooltip
+    [Tooltip("Movement speed multiplier during slow. 1 = no slow, 0.5 = 50% speed")]
+    #endregion
+    [Range(0f, 1f)] public float iceSlowMultiplier = 0.5f;
+    #region Tooltip
+    [Tooltip("How long the slow effect lasts in seconds")]
+    #endregion
+    public float iceSlowDuration = 2f;
 
     #region Header AMMO TRAIL DETAILS
     [Space(10)]
@@ -165,6 +182,15 @@ public class AmmoDetailsSO : ScriptableObject
             HelperUtilities.ValidateCheckPositiveValue(this, nameof(fireDotDamagePerTick), fireDotDamagePerTick, false);
             HelperUtilities.ValidateCheckPositiveValue(this, nameof(fireDotTickInterval), fireDotTickInterval, false);
             HelperUtilities.ValidateCheckPositiveValue(this, nameof(fireDotDuration), fireDotDuration, false);
+        }
+
+        if (isIceSlowEnabled)
+        {
+            HelperUtilities.ValidateCheckPositiveValue(this, nameof(iceSlowDuration), iceSlowDuration, false);
+            if (iceSlowMultiplier <= 0f || iceSlowMultiplier > 1f)
+            {
+                Debug.LogError($"{name}: {nameof(iceSlowMultiplier)} must be > 0 and <= 1");
+            }
         }
 
         if (isAmmoTrail)
