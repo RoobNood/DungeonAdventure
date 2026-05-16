@@ -24,6 +24,16 @@ public class BurnDamageOverTime : MonoBehaviour
         burnCoroutine = StartCoroutine(BurnRoutine(damagePerTick, tickInterval, duration));
     }
 
+    public void ClearBurn()
+    {
+        if (burnCoroutine != null)
+            StopCoroutine(burnCoroutine);
+
+        burnCoroutine = null;
+
+        // Optional: clear burn VFX here if needed.
+    }
+
     private IEnumerator BurnRoutine(int damagePerTick, float tickInterval, float duration)
     {
         float elapsedTime = 0f;
