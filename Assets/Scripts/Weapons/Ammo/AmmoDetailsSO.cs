@@ -5,6 +5,14 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "AmmoDetails_", menuName = "Scriptable Objects/Weapons/Ammo Details")]
 public class AmmoDetailsSO : ScriptableObject
 {
+    public enum ElementType
+    {
+        None,
+        Fire,
+        Water,
+        Ice
+    }
+
     #region Header BASIC AMMO DETAILS
     [Space(10)]
     [Header("BASIC AMMO DETAILS")]
@@ -109,30 +117,34 @@ public class AmmoDetailsSO : ScriptableObject
     public float ammoSpawnIntervalMax = 0f;
 
 
+    #region Header ELEMENT EFFECTS
+    [Space(10)]
+    [Header("ELEMENT EFFECTS")]
+    #endregion
+    #region Tooltip
+    [Tooltip("Element type applied by this ammo: Fire / Water / Ice / None")]
+    #endregion
+    public ElementType elementType = ElementType.None;
+
     #region Header FIRE DOT
     [Space(10)]
-    #region Header ICE SLOW
-    [Space(10)]
-    [Header("ICE SLOW")]
+    [Header("FIRE DOT")]
     #endregion
-    public bool isIceSlowEnabled = false;
-    [Range(0f, 1f)] public float iceSlowMultiplier = 0.5f;
-    public float iceSlowDuration = 2f;
-
-        if (isIceSlowEnabled)
-        {
-            HelperUtilities.ValidateCheckPositiveValue(this, nameof(iceSlowDuration), iceSlowDuration, false);
-            if (iceSlowMultiplier <= 0f || iceSlowMultiplier > 1f)
-            {
-                Debug.LogError($"{name}: {nameof(iceSlowMultiplier)} must be > 0 and <= 1");
-            }
-        }
-
-    [Header("FIRE DOT (³ÖÐøÉËº¦)")]
+    #region Tooltip
+    [Tooltip("Enable fire damage over time effect on hit targets")]
     #endregion
     public bool isFireDotEnabled = false;
+    #region Tooltip
+    [Tooltip("Damage dealt on each fire DOT tick")]
+    #endregion
     public int fireDotDamagePerTick = 1;
+    #region Tooltip
+    [Tooltip("Time interval in seconds between fire DOT ticks")]
+    #endregion
     public float fireDotTickInterval = 0.5f;
+    #region Tooltip
+    [Tooltip("Total duration in seconds of the fire DOT effect")]
+    #endregion
     public float fireDotDuration = 2f;
 
     #region Header ICE SLOW
