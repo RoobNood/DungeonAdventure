@@ -48,4 +48,8 @@ public class MovementToPosition : MonoBehaviour
     {
         speedMultiplier = multiplier;
     }
-}
+
+    public float GetSpeedMultiplier()
+    {
+        return speedMultiplier;
+    }}

@@ -18,9 +18,12 @@ public class Health : MonoBehaviour
     private HealthEvent healthEvent;
     private Player player;
     private Coroutine immunityCoroutine;
+    private Coroutine damageFlashCoroutine;
     private bool isImmuneAfterHit = false;
     private float immunityTime = 0f;
     private SpriteRenderer spriteRenderer = null;
+    private SpriteRenderer[] damageFlashSpriteRenderers = null;
+    private Color[] damageFlashOriginalColors = null;
     private const float spriteFlashInterval = 0.2f;
     private WaitForSeconds WaitForSecondsSpriteFlashInterval = new WaitForSeconds(spriteFlashInterval);
 
@@ -46,20 +49,27 @@ public class Health : MonoBehaviour
         // Get player / enemy hit immunity details
         if (player != null)
         {
+            spriteRenderer = player.spriteRenderer;
+            damageFlashSpriteRenderers = new SpriteRenderer[] { spriteRenderer };
+
             if (player.playerDetails.isImmuneAfterHit)
             {
                 isImmuneAfterHit = true;
                 immunityTime = player.playerDetails.hitImmunityTime;
-                spriteRenderer = player.spriteRenderer;
             }
         }
         else if (enemy != null)
         {
+            damageFlashSpriteRenderers = enemy.spriteRendererArray;
+            if (enemy.spriteRendererArray != null && enemy.spriteRendererArray.Length > 0)
+            {
+                spriteRenderer = enemy.spriteRendererArray[0];
+            }
+
             if (enemy.enemyDetails.isImmuneAfterHit)
             {
                 isImmuneAfterHit = true;
                 immunityTime = enemy.enemyDetails.hitImmunityTime;
-                spriteRenderer = enemy.spriteRendererArray[0];
             }
         }
 
@@ -77,14 +87,9 @@ public class Health : MonoBehaviour
     /// <summary>
     /// Public method called when damage is taken
     /// </summary>
-    public void TakeDamage(int damageAmount)
+    public bool TakeDamage(int damageAmount)
     {
-        bool isRolling = false;
-
-        if (player != null)
-            isRolling = player.playerControl.isPlayerRolling;
-
-        if (isDamageable && !isRolling)
+        if (CanTakeDamage())
         {
             currentHealth -= damageAmount;
             CallHealthEvent(damageAmount);
@@ -96,7 +101,19 @@ public class Health : MonoBehaviour
             {
                 healthBar.SetHealthBarValue((float)currentHealth / (float)startingHealth);
             }
+
+            return true;
         }
+
+        return false;
+    }
+
+    public bool CanTakeDamage()
+    {
+        Player targetPlayer = player != null ? player : GetComponent<Player>();
+        bool isRolling = targetPlayer != null && targetPlayer.playerControl.isPlayerRolling;
+
+        return isDamageable && !isRolling;
     }
 
     /// <summary>
@@ -120,22 +137,50 @@ public class Health : MonoBehaviour
 
     }
 
+    public void FlashDamageIndicator()
+    {
+        if (gameObject.activeSelf == false || damageFlashSpriteRenderers == null || damageFlashSpriteRenderers.Length == 0)
+            return;
+
+        if (damageFlashCoroutine != null)
+        {
+            StopCoroutine(damageFlashCoroutine);
+            RestoreDamageFlashSpriteColors();
+        }
+
+        damageFlashOriginalColors = CaptureDamageFlashSpriteColors();
+        damageFlashCoroutine = StartCoroutine(DamageFlashRoutine());
+    }
+
+    private IEnumerator DamageFlashRoutine()
+    {
+        SetDamageFlashSpriteColor(Color.red);
+
+        yield return WaitForSecondsSpriteFlashInterval;
+
+        RestoreDamageFlashSpriteColors();
+
+        damageFlashOriginalColors = null;
+        damageFlashCoroutine = null;
+    }
+
     /// <summary>
     /// Coroutine to indicate a hit and give some post hit immunity
     /// </summary>
     private IEnumerator PostHitImmunityRoutine(float immunityTime, SpriteRenderer spriteRenderer)
     {
         int iterations = Mathf.RoundToInt(immunityTime / spriteFlashInterval / 2f);
+        Color[] originalSpriteColors = CaptureDamageFlashSpriteColors();
 
         isDamageable = false;
 
         while (iterations > 0)
         {
-            spriteRenderer.color = Color.red;
+            SetDamageFlashSpriteColor(Color.red);
 
             yield return WaitForSecondsSpriteFlashInterval;
 
-            spriteRenderer.color = Color.white;
+            RestoreDamageFlashSpriteColors(originalSpriteColors);
 
             yield return WaitForSecondsSpriteFlashInterval;
 
@@ -145,8 +190,59 @@ public class Health : MonoBehaviour
 
         }
 
+        RestoreDamageFlashSpriteColors(originalSpriteColors);
         isDamageable = true;
 
+    }
+
+    private void SetDamageFlashSpriteColor(Color color)
+    {
+        if (damageFlashSpriteRenderers == null)
+            return;
+
+        foreach (SpriteRenderer damageFlashSpriteRenderer in damageFlashSpriteRenderers)
+        {
+            if (damageFlashSpriteRenderer != null)
+            {
+                damageFlashSpriteRenderer.color = color;
+            }
+        }
+    }
+
+    private Color[] CaptureDamageFlashSpriteColors()
+    {
+        if (damageFlashSpriteRenderers == null)
+            return null;
+
+        Color[] spriteColors = new Color[damageFlashSpriteRenderers.Length];
+
+        for (int i = 0; i < damageFlashSpriteRenderers.Length; i++)
+        {
+            spriteColors[i] = damageFlashSpriteRenderers[i] != null ? damageFlashSpriteRenderers[i].color : Color.white;
+        }
+
+        return spriteColors;
+    }
+
+    private void RestoreDamageFlashSpriteColors()
+    {
+        RestoreDamageFlashSpriteColors(damageFlashOriginalColors);
+    }
+
+    private void RestoreDamageFlashSpriteColors(Color[] spriteColors)
+    {
+        if (damageFlashSpriteRenderers == null || spriteColors == null)
+            return;
+
+        int spriteCount = Mathf.Min(damageFlashSpriteRenderers.Length, spriteColors.Length);
+
+        for (int i = 0; i < spriteCount; i++)
+        {
+            if (damageFlashSpriteRenderers[i] != null)
+            {
+                damageFlashSpriteRenderers[i].color = spriteColors[i];
+            }
+        }
     }
 
     private void CallHealthEvent(int damageAmount)

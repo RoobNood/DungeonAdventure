@@ -34,12 +34,17 @@ MonoBehaviour:
   ammoSpawnIntervalMax: 0
   elementType: 1
   isFireDotEnabled: 1
-  fireDotDamagePerTick: 5
+  fireDotDamagePerTick: 8
   fireDotTickInterval: 0.5
   fireDotDuration: 2
   isIceSlowEnabled: 0
   iceSlowMultiplier: 0.5
   iceSlowDuration: 2
+  steamAreaPrefab: {fileID: 4386111628382208583, guid: 26f8bc4e7e06f4545aa0c1ab7ed73462, type: 3}
+  iceAreaPrefab: {fileID: 5027411641869976262, guid: 18eefc62e3667c8438e907f038637e4c, type: 3}
+  waterAreaPrefab: {fileID: 728056748345565275, guid: 88619316345a81c4e95163ffb7b5b48f, type: 3}
+  elementAreaLifetime: 5
+  elementAreaScale: {x: 3, y: 3, z: 1}
   isAmmoTrail: 0
   ammoTrailTime: 0
   ammoTrailMaterial: {fileID: 0}

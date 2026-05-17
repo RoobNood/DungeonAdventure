@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-// Don't add require directives since we're destroying the components when the item is destroyed
+// Don't add require directives since some legacy prefabs only add these components where needed.
 [DisallowMultipleComponent]
 public class DestroyableItem : MonoBehaviour
 {
@@ -24,6 +24,7 @@ public class DestroyableItem : MonoBehaviour
     private HealthEvent healthEvent;
     private Health health;
     private ReceiveContactDamage receiveContactDamage;
+    private bool isDestroyed;
 
     private void Awake()
     {
@@ -43,13 +44,17 @@ public class DestroyableItem : MonoBehaviour
 
     private void OnDisable()
     {
-        healthEvent.OnHealthChanged -= HealthEvent_OnHealthLost;
+        if (healthEvent != null)
+        {
+            healthEvent.OnHealthChanged -= HealthEvent_OnHealthLost;
+        }
     }
 
     private void HealthEvent_OnHealthLost(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
     {
-        if (healthEventArgs.healthAmount <= 0f)
+        if (!isDestroyed && healthEventArgs.healthAmount <= 0f)
         {
+            isDestroyed = true;
             StartCoroutine(PlayAnimation());
         }
     }
@@ -57,7 +62,22 @@ public class DestroyableItem : MonoBehaviour
     private IEnumerator PlayAnimation()
     {
         // Destroy the trigger collider
-        Destroy(boxCollider2D);
+        if (boxCollider2D != null)
+        {
+            Destroy(boxCollider2D);
+        }
+
+        if (health != null)
+        {
+            health.isDamageable = false;
+        }
+
+        BurnDamageOverTime burnDamageOverTime = GetComponent<BurnDamageOverTime>();
+        if (burnDamageOverTime != null)
+        {
+            burnDamageOverTime.ClearBurn();
+            Destroy(burnDamageOverTime);
+        }
 
         // Play sound effect
         if (destroySoundEffect != null)
@@ -66,21 +86,30 @@ public class DestroyableItem : MonoBehaviour
         }
 
         // Trigger the destroy animation
-        animator.SetBool(Settings.destroy, true);
+        if (animator != null)
+        {
+            animator.SetBool(Settings.destroy, true);
+        }
 
 
         // Let the animation play through
-        while (!animator.GetCurrentAnimatorStateInfo(0).IsName(Settings.stateDestroyed))
+        while (animator != null && !animator.GetCurrentAnimatorStateInfo(0).IsName(Settings.stateDestroyed))
         {
             yield return null;
         }
 
-        // Then destroy all components other than the Sprite Renderer to just display the final
-        // sprite in the animation
-        Destroy(animator);
-        Destroy(receiveContactDamage);
-        Destroy(health);
-        Destroy(healthEvent);
+        // Keep Health and HealthEvent because Health requires HealthEvent, and temporary
+        // effects like BurnDamageOverTime may also require Health during cleanup.
+        if (animator != null)
+        {
+            Destroy(animator);
+        }
+
+        if (receiveContactDamage != null)
+        {
+            Destroy(receiveContactDamage);
+        }
+
         Destroy(this);
 
     }

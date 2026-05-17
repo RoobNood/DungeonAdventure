@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3615580913715971529}
   - component: {fileID: 7459886069732737925}
   - component: {fileID: 557146263625083812}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: WaterArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,9 +73,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -790355531
   m_SortingLayer: 1
-  m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: 9445e6f8ebb87f0439acaf0fcb88320e, type: 3}
-  m_Color: {r: 0.2584905, g: 0.49238637, b: 1, a: 1}
+  m_SortingOrder: 2
+  m_Sprite: {fileID: 21300000, guid: a12b0d54e17f4f25a1e67f53aa01d721, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.9}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

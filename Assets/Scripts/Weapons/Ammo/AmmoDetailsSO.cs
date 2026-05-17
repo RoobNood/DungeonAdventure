@@ -116,7 +116,6 @@ public class AmmoDetailsSO : ScriptableObject
     #endregion
     public float ammoSpawnIntervalMax = 0f;
 
-
     #region Header ELEMENT EFFECTS
     [Space(10)]
     [Header("ELEMENT EFFECTS")]
@@ -164,6 +163,31 @@ public class AmmoDetailsSO : ScriptableObject
     #endregion
     public float iceSlowDuration = 2f;
 
+    #region Header ELEMENT AREAS
+    [Space(10)]
+    [Header("ELEMENT AREAS")]
+    #endregion
+    #region Tooltip
+    [Tooltip("Area spawned when fire and water react, or water extinguishes a torch")]
+    #endregion
+    public GameObject steamAreaPrefab;
+    #region Tooltip
+    [Tooltip("Area spawned when water and ice react")]
+    #endregion
+    public GameObject iceAreaPrefab;
+    #region Tooltip
+    [Tooltip("Area spawned when fire and ice react")]
+    #endregion
+    public GameObject waterAreaPrefab;
+    #region Tooltip
+    [Tooltip("How long spawned element areas stay in the scene")]
+    #endregion
+    public float elementAreaLifetime = 5f;
+    #region Tooltip
+    [Tooltip("Scale applied to spawned element areas")]
+    #endregion
+    public Vector3 elementAreaScale = new Vector3(3f, 3f, 1f);
+
     #region Header AMMO TRAIL DETAILS
     [Space(10)]
     [Header("AMMO TRAIL DETAILS")]
@@ -191,7 +215,6 @@ public class AmmoDetailsSO : ScriptableObject
 
     #region Validation
 #if UNITY_EDITOR
-    // Validate the scriptable object details entered
     private void OnValidate()
     {
         HelperUtilities.ValidateCheckEmptyString(this, nameof(ammoName), ammoName);
@@ -206,6 +229,7 @@ public class AmmoDetailsSO : ScriptableObject
         HelperUtilities.ValidateCheckPositiveRange(this, nameof(ammoSpreadMin), ammoSpreadMin, nameof(ammoSpreadMax), ammoSpreadMax, true);
         HelperUtilities.ValidateCheckPositiveRange(this, nameof(ammoSpawnAmountMin), ammoSpawnAmountMin, nameof(ammoSpawnAmountMax), ammoSpawnAmountMax, false);
         HelperUtilities.ValidateCheckPositiveRange(this, nameof(ammoSpawnIntervalMin), ammoSpawnIntervalMin, nameof(ammoSpawnIntervalMax), ammoSpawnIntervalMax, true);
+
         if (isFireDotEnabled)
         {
             HelperUtilities.ValidateCheckPositiveValue(this, nameof(fireDotDamagePerTick), fireDotDamagePerTick, false);
@@ -222,6 +246,18 @@ public class AmmoDetailsSO : ScriptableObject
             }
         }
 
+        if (elementType != ElementType.None)
+        {
+            HelperUtilities.ValidateCheckNullValue(this, nameof(steamAreaPrefab), steamAreaPrefab);
+            HelperUtilities.ValidateCheckNullValue(this, nameof(iceAreaPrefab), iceAreaPrefab);
+            HelperUtilities.ValidateCheckNullValue(this, nameof(waterAreaPrefab), waterAreaPrefab);
+            HelperUtilities.ValidateCheckPositiveValue(this, nameof(elementAreaLifetime), elementAreaLifetime, false);
+            if (elementAreaScale.x <= 0f || elementAreaScale.y <= 0f || elementAreaScale.z <= 0f)
+            {
+                Debug.LogError($"{name}: {nameof(elementAreaScale)} values must be > 0");
+            }
+        }
+
         if (isAmmoTrail)
         {
             HelperUtilities.ValidateCheckPositiveValue(this, nameof(ammoTrailTime), ammoTrailTime, false);
@@ -230,7 +266,6 @@ public class AmmoDetailsSO : ScriptableObject
             HelperUtilities.ValidateCheckPositiveValue(this, nameof(ammoTrailEndWidth), ammoTrailEndWidth, false);
         }
     }
-
 #endif
     #endregion
 }

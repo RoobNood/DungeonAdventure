@@ -18,9 +18,9 @@ MonoBehaviour:
   ammoPrefabArray:
   - {fileID: 8274860614600379229, guid: 955bd1a837a9d0b46bc2af6b79383302, type: 3}
   - {fileID: 4024413289330009806, guid: cc1eed6e05b959d47b31344f3a0f6894, type: 3}
-  ammoMaterial: {fileID: 2100000, guid: 33a55999e44f4724191171c59fc64319, type: 2}
+  ammoMaterial: {fileID: 2100000, guid: f40d05d451e2ae24f91e9e3314c280da, type: 2}
   ammoChargeTime: 0.5
-  ammoChargeMaterial: {fileID: 2100000, guid: c64696a09f1cb1a4d9766d1fe9778ca5, type: 2}
+  ammoChargeMaterial: {fileID: 2100000, guid: f40d05d451e2ae24f91e9e3314c280da, type: 2}
   ammoHitEffect: {fileID: 11400000, guid: 204b568fbae24914dba3d239714ff74a, type: 2}
   ammoDamage: 5
   ammoSpeedMin: 7
@@ -32,7 +32,20 @@ MonoBehaviour:
   ammoSpawnAmountMin: 1
   ammoSpawnAmountMax: 1
   ammoSpawnIntervalMin: 0
-  ammoSpawnIntervalMax: 0
+  ammoSpawnIntervalMax: 0
+  iceSlowDuration: 2
+  iceSlowMultiplier: 0.5
+  isIceSlowEnabled: 1
+  fireDotDuration: 2
+  fireDotTickInterval: 0.5
+  fireDotDamagePerTick: 1
+  isFireDotEnabled: 0
+  elementType: 3
+  steamAreaPrefab: {fileID: 4386111628382208583, guid: 26f8bc4e7e06f4545aa0c1ab7ed73462, type: 3}
+  iceAreaPrefab: {fileID: 5027411641869976262, guid: 18eefc62e3667c8438e907f038637e4c, type: 3}
+  waterAreaPrefab: {fileID: 728056748345565275, guid: 88619316345a81c4e95163ffb7b5b48f, type: 3}
+  elementAreaLifetime: 5
+  elementAreaScale: {x: 3, y: 3, z: 1}
   isAmmoTrail: 0
   ammoTrailTime: 0
   ammoTrailMaterial: {fileID: 0}

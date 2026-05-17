@@ -22,26 +22,39 @@ public class IceSlowOverTime : MonoBehaviour
         if (slowCoroutine != null)
             StopCoroutine(slowCoroutine);
 
-        slowCoroutine = StartCoroutine(SlowRoutine(slowMultiplier, duration));
+        ApplyMovementModifier(slowMultiplier);
+        slowCoroutine = StartCoroutine(SlowRoutine(duration));
     }
 
-    private IEnumerator SlowRoutine(float slowMultiplier, float duration)
+    private IEnumerator SlowRoutine(float duration)
     {
-        SetMovementMultiplier(slowMultiplier);
-
         yield return new WaitForSeconds(duration);
 
-        SetMovementMultiplier(1f);
+        RemoveMovementModifier();
 
         slowCoroutine = null;
     }
 
-    private void SetMovementMultiplier(float multiplier)
+    private void OnDisable()
+    {
+        RemoveMovementModifier();
+    }
+
+    private void ApplyMovementModifier(float multiplier)
     {
         if (movementByVelocity != null)
-            movementByVelocity.SetSpeedMultiplier(multiplier);
+            MovementSpeedModifier.Add(movementByVelocity, this, multiplier);
 
         if (movementToPosition != null)
-            movementToPosition.SetSpeedMultiplier(multiplier);
+            MovementSpeedModifier.Add(movementToPosition, this, multiplier);
+    }
+
+    private void RemoveMovementModifier()
+    {
+        if (movementByVelocity != null)
+            MovementSpeedModifier.Remove(movementByVelocity, this);
+
+        if (movementToPosition != null)
+            MovementSpeedModifier.Remove(movementToPosition, this);
     }
 }

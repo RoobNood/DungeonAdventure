@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class TorchElementState : MonoBehaviour
 {
@@ -9,15 +10,40 @@ public class TorchElementState : MonoBehaviour
     public Transform reactionAnchor;
 
     [Header("Visuals")]
-    [SerializeField] private ParticleSystem flameEffect;
-    [SerializeField] private Light torchLight;
+    [SerializeField] private GameObject flameEffectObject;
+    [SerializeField] private Light2D torchLight;
 
     [Header("Audio")]
     [SerializeField] private AudioSource loopAudioSource;
 
     private void Awake()
     {
+        CacheMissingReferences();
         ApplyState();
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Ammo ammo = other.GetComponent<Ammo>();
+        if (ammo == null)
+            return;
+
+        switch (ammo.GetElementType())
+        {
+            case AmmoDetailsSO.ElementType.Fire:
+                Ignite();
+                ammo.ConsumeAfterElementReaction();
+                break;
+
+            case AmmoDetailsSO.ElementType.Water:
+                if (Extinguish())
+                {
+                    SpawnSteamFromAmmo(ammo);
+                }
+
+                ammo.ConsumeAfterElementReaction();
+                break;
+        }
     }
 
     public void Ignite()
@@ -31,32 +57,61 @@ public class TorchElementState : MonoBehaviour
         ApplyState();
     }
 
-    public void Extinguish()
+    public bool Extinguish()
     {
         if (!isLit)
         {
-            return;
+            return false;
         }
 
         isLit = false;
         ApplyState();
+        return true;
+    }
+
+    private void SpawnSteamFromAmmo(Ammo ammo)
+    {
+        AmmoDetailsSO ammoDetails = ammo.GetAmmoDetails();
+        if (ammoDetails == null || ammoDetails.steamAreaPrefab == null)
+            return;
+
+        GameObject steamArea = Instantiate(ammoDetails.steamAreaPrefab, GetReactionPosition(), Quaternion.identity);
+        steamArea.transform.localScale = ammoDetails.elementAreaScale;
+        Destroy(steamArea, ammoDetails.elementAreaLifetime);
+    }
+
+    private void CacheMissingReferences()
+    {
+        if (flameEffectObject == null)
+        {
+            Transform flameTransform = transform.Find("TorchHolder/Flame");
+            if (flameTransform == null)
+            {
+                flameTransform = transform.Find("Flame");
+            }
+
+            if (flameTransform != null)
+            {
+                flameEffectObject = flameTransform.gameObject;
+            }
+        }
+
+        if (torchLight == null)
+        {
+            torchLight = GetComponentInChildren<Light2D>(true);
+        }
+
+        if (loopAudioSource == null)
+        {
+            loopAudioSource = GetComponentInChildren<AudioSource>(true);
+        }
     }
 
     private void ApplyState()
     {
-        if (flameEffect != null)
+        if (flameEffectObject != null)
         {
-            if (isLit)
-            {
-                if (!flameEffect.isPlaying)
-                {
-                    flameEffect.Play();
-                }
-            }
-            else if (flameEffect.isPlaying)
-            {
-                flameEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            }
+            flameEffectObject.SetActive(isLit);
         }
 
         if (torchLight != null)

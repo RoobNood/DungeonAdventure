@@ -45,6 +45,11 @@ public class BurnDamageOverTime : MonoBehaviour
             if (health != null && health.isDamageable)
             {
                 health.TakeDamage(damagePerTick);
+
+                if (health.enemy != null && !health.enemy.enemyDetails.isImmuneAfterHit)
+                {
+                    health.FlashDamageIndicator();
+                }
             }
 
             elapsedTime += tickInterval;

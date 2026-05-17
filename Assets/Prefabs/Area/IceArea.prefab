@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 4347791085217105226}
   - component: {fileID: 8662545052234454629}
   - component: {fileID: -99657428577080559}
-  m_Layer: 0
+  - component: {fileID: 6615027411641869971}
+  m_Layer: 7
   m_Name: IceArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,9 +87,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -790355531
   m_SortingLayer: 1
-  m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: 02d6bc4866c739846bd8dd6ea0cd29cf, type: 3}
-  m_Color: {r: 0.4377358, g: 0.8588827, b: 1, a: 1}
+  m_SortingOrder: 2
+  m_Sprite: {fileID: 21300000, guid: d29e1c03b27f4aa6a6b12c5d33dded42, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.9}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -110,4 +111,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e15f1c8a5e138194d80bca8e581e358e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedUpRate: 1.4
+  speedMultiplier: 1.5
+
+--- !u!61 &6615027411641869971
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5027411641869976262}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.5, y: 1.5}
+  m_EdgeRadius: 0
