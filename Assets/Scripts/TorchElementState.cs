@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 public class TorchElementState : MonoBehaviour
 {
@@ -8,12 +7,10 @@ public class TorchElementState : MonoBehaviour
 
     [Header("Reaction")]
     public Transform reactionAnchor;
-    [SerializeField] private GameObject steamPrefab;
-    [SerializeField] private float steamLifetime = 2f;
 
     [Header("Visuals")]
-    [SerializeField] private GameObject flameEffectObject;
-    [SerializeField] private Light2D torchLight2D;
+    [SerializeField] private ParticleSystem flameEffect;
+    [SerializeField] private Light torchLight;
 
     [Header("Audio")]
     [SerializeField] private AudioSource loopAudioSource;
@@ -42,20 +39,29 @@ public class TorchElementState : MonoBehaviour
         }
 
         isLit = false;
-        SpawnSteamEffect();
         ApplyState();
     }
 
     private void ApplyState()
     {
-        if (flameEffectObject != null)
+        if (flameEffect != null)
         {
-            flameEffectObject.SetActive(isLit);
+            if (isLit)
+            {
+                if (!flameEffect.isPlaying)
+                {
+                    flameEffect.Play();
+                }
+            }
+            else if (flameEffect.isPlaying)
+            {
+                flameEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            }
         }
 
-        if (torchLight2D != null)
+        if (torchLight != null)
         {
-            torchLight2D.enabled = isLit;
+            torchLight.enabled = isLit;
         }
 
         if (loopAudioSource != null)
@@ -71,21 +77,6 @@ public class TorchElementState : MonoBehaviour
             {
                 loopAudioSource.Stop();
             }
-        }
-    }
-
-    private void SpawnSteamEffect()
-    {
-        if (steamPrefab == null)
-        {
-            return;
-        }
-
-        GameObject steamInstance = Instantiate(steamPrefab, GetReactionPosition(), Quaternion.identity);
-
-        if (steamLifetime > 0f)
-        {
-            Destroy(steamInstance, steamLifetime);
         }
     }
 
