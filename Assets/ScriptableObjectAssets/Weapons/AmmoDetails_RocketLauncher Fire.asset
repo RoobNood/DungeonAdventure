@@ -32,10 +32,14 @@ MonoBehaviour:
   ammoSpawnAmountMax: 1
   ammoSpawnIntervalMin: 0
   ammoSpawnIntervalMax: 0
-  isFireDotEnabled: 0
-  fireDotDamagePerTick: 1
+  elementType: 1
+  isFireDotEnabled: 1
+  fireDotDamagePerTick: 8
   fireDotTickInterval: 0.5
   fireDotDuration: 2
+  isIceSlowEnabled: 0
+  iceSlowMultiplier: 0.5
+  iceSlowDuration: 2
   isAmmoTrail: 1
   ammoTrailTime: 0.15
   ammoTrailMaterial: {fileID: 2100000, guid: 8556be20b5f346149bb8497e4b4dfbdc, type: 2}

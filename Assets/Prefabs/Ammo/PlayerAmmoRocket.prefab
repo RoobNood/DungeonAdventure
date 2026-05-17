@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7786093486357848725}
   m_Layer: 14
   m_Name: PlayerAmmoRocket
-  m_TagString: Untagged
+  m_TagString: FireBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

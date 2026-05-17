@@ -16,7 +16,7 @@ MonoBehaviour:
   isPlayerAmmo: 1
   ammoSprite: {fileID: 21300000, guid: e36e8bbd18074d341b170885ac002038, type: 3}
   ammoPrefabArray:
-  - {fileID: 3704831762367981905, guid: e7548ec462fb85d40b63328f29de0101, type: 3}
+  - {fileID: 3497009381558288465, guid: f68a7128b09ced84c9d0c430e1147f18, type: 3}
   ammoMaterial: {fileID: 2100000, guid: c64696a09f1cb1a4d9766d1fe9778ca5, type: 2}
   ammoChargeTime: 0
   ammoChargeMaterial: {fileID: 0}
@@ -32,10 +32,14 @@ MonoBehaviour:
   ammoSpawnAmountMax: 1
   ammoSpawnIntervalMin: 0
   ammoSpawnIntervalMax: 0
+  elementType: 2
   isFireDotEnabled: 0
   fireDotDamagePerTick: 1
   fireDotTickInterval: 0.5
   fireDotDuration: 2
+  isIceSlowEnabled: 0
+  iceSlowMultiplier: 0.5
+  iceSlowDuration: 2
   isAmmoTrail: 0
   ammoTrailTime: 0
   ammoTrailMaterial: {fileID: 0}

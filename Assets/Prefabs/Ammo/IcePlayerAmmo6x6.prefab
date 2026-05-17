@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3626173412936922469}
   m_Layer: 14
   m_Name: IcePlayerAmmo6x6
-  m_TagString: Untagged
+  m_TagString: IceBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -171,6 +171,7 @@ MonoBehaviour:
   iceAreaPrefab: {fileID: 5027411641869976262, guid: 18eefc62e3667c8438e907f038637e4c, type: 3}
   areaExistTime: 5
   slowRatio: 0.5
+  slowDuration: 2
 --- !u!1 &7277858621023063489
 GameObject:
   m_ObjectHideFlags: 0

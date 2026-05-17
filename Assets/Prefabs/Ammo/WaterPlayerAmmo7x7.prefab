@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5261704722967246317}
   m_Layer: 14
   m_Name: WaterPlayerAmmo7x7
-  m_TagString: Untagged
+  m_TagString: WaterBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
